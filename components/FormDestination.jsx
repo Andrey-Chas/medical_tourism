@@ -1,33 +1,31 @@
+import Select from '@/components/Select';
 import Link from 'next/link';
 import Image from 'next/image';
 
-const FormAddress = ({ type, address, setAddress, successMessage, submitting, handleSubmit }) => {
+const FormDestination = ({ type, destination, setDestination, successMessage, submitting, handleSubmit }) => {
     return (
         <section className="forms_section">
             <h1 className="forms_name">
-                {type} Address
+                {type} Destination
             </h1>
 
             <form
                 onSubmit={handleSubmit}
                 className="mt-10"
             >
-                <label className="forms_label">City:</label>
+                <label className="forms_label">Name:</label>
                 <input
-                    value={address.city}
-                    onChange={(e) => setAddress({ ...address, city: e.target.value })}
-                    placeholder="Name of the city..."
+                    value={destination.name}
+                    onChange={(e) => setDestination({ ...destination, name: e.target.value })}
+                    placeholder="Name of the destination..."
                     required
                     className="input_field"
                 />
                 <br />
-                <label className="forms_label">Country:</label>
-                <input
-                    value={address.country}
-                    onChange={(e) => setAddress({ ...address, country: e.target.value })}
-                    placeholder="Name of the country..."
-                    required
-                    className="input_field"
+                <label className="forms_label">Address:</label>
+                <Select
+                    data={destination}
+                    setData={setDestination}
                 />
                 <br />
 
@@ -64,4 +62,4 @@ const FormAddress = ({ type, address, setAddress, successMessage, submitting, ha
     )
 }
 
-export default FormAddress
+export default FormDestination

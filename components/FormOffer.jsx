@@ -2,11 +2,11 @@ import Select from '@/components/Select';
 import Link from 'next/link';
 import Image from 'next/image';
 
-const FormClinic = ({ type, clinic, setClinic, successMessage, submitting, handleSubmit }) => {
+const FormOffer = ({ type, offer, setOffer, successMessage, submitting, handleSubmit, selectedAddress, handleOnChangeAddress }) => {
     return (
         <section className="forms_section">
             <h1 className="forms_name">
-                {type} Clinic
+                {type} Offer
             </h1>
 
             <form
@@ -15,18 +15,9 @@ const FormClinic = ({ type, clinic, setClinic, successMessage, submitting, handl
             >
                 <label className="forms_label">Name:</label>
                 <input
-                    value={clinic.name}
-                    onChange={(e) => setClinic({ ...clinic, name: e.target.value })}
-                    placeholder="Name of the clinic..."
-                    required
-                    className="input_field"
-                />
-                <br />
-                <label className="forms_label">Specialisation:</label>
-                <input
-                    value={clinic.specialisation}
-                    onChange={(e) => setClinic({ ...clinic, specialisation: e.target.value })}
-                    placeholder="Name of the specialisation..."
+                    value={offer.name}
+                    onChange={(e) => setOffer({ ...offer, name: e.target.value })}
+                    placeholder="Name of the offer..."
                     required
                     className="input_field"
                 />
@@ -34,27 +25,37 @@ const FormClinic = ({ type, clinic, setClinic, successMessage, submitting, handl
                 <label className="forms_label">Address:</label>
                 <Select
                     type='address'
-                    handleOnChangeAddress={(e) => setClinic({ ...clinic, address: e.target.value })}
+                    handleOnChangeAddress={handleOnChangeAddress}
                 />
                 <br />
-                <label className="forms_label">Url:</label>
-                <input
-                    value={clinic.url}
-                    type='url'
-                    onChange={(e) => setClinic({ ...clinic, url: e.target.value })}
-                    placeholder="Url..."
-                    required
-                    className="input_field"
+                <label className="forms_label">Clinic:</label>
+                <Select
+                    type='clinic'
+                    addressValue={selectedAddress}
+                    handleOnChangeAddress={(e) => setOffer({ ...offer, clinic: e.target.value })}
                 />
                 <br />
-                <label className="forms_label">Phone Number:</label>
-                <input
-                    value={clinic.phone_number}
-                    type="tel"
-                    onChange={(e) => setClinic({ ...clinic, phone_number: e.target.value })}
-                    placeholder="Phone number..."
+                <label className="forms_label">Hotel:</label>
+                <Select
+                    type='hotel'
+                    addressValue={selectedAddress}
+                    handleOnChangeAddress={(e) => setOffer({ ...offer, hotel: e.target.value })}
+                />
+                <br />
+                <label className="forms_label">Destination:</label>
+                <Select
+                    type='destination'
+                    addressValue={selectedAddress}
+                    handleOnChangeAddress={(e) => setOffer({ ...offer, destination: e.target.value })}
+                />
+                <br />
+                <label className="forms_label">Description:</label>
+                <textarea
+                    value={offer.description}
+                    onChange={(e) => setOffer({ ...offer, description: e.target.value })}
+                    placeholder="Write description here..."
                     required
-                    className="input_field"
+                    className="form_textarea"
                 />
                 <br />
 
@@ -91,4 +92,4 @@ const FormClinic = ({ type, clinic, setClinic, successMessage, submitting, handl
     )
 }
 
-export default FormClinic
+export default FormOffer

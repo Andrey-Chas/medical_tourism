@@ -2,56 +2,52 @@
 
 import { useState } from 'react';
 
-import FormHotel from '@/components/FormHotel';
+import FormDestination from '@/components/FormDestination';
 
-const CreateHotel= () => {
+const CreateDestination = () => {
   const [submitting, setSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState(false);
-  const [hotel, setHotel] = useState({
+  const [destination, setDestination] = useState({
     name: '',
-    address: '',
-    url: '',
-    phone_number: ''
+    address: ''
   });
 
-  const createHotel = async (e) => {
+  const createDestination = async (e) => {
     e.preventDefault();
     setSubmitting(true);
 
     try {
-      const response = await fetch('/api/hotel/new', {
+      const response = await fetch('/api/destination/new', {
         method: 'POST',
         body: JSON.stringify({
-          name: hotel.name.trim(),
-          addressId: hotel.address.trim(),
-          url: hotel.url.trim(),
-          phone_number: hotel.phone_number.trim()
+          name: destination.name.trim(),
+          addressId: destination.address.trim()
         })
       })
 
       if (response.ok) {
         console.log("Successfully added to the database");
-        setHotel({ ...hotel, name: '', url: '', phone_number: '' });
+        setDestination({ ...destination, name: '' });
         setSuccessMessage(true);
       }
     } catch (error) {
       console.log(error);
     } finally {
       setSubmitting(false);
-      setTimeout(() => setSuccessMessage(false), 5000)
+      setTimeout(() => setSuccessMessage(false), 5000);
     }
   }
 
   return (
-    <FormHotel
+    <FormDestination
       type="Create"
-      hotel={hotel}
-      setHotel={setHotel}
+      destination={destination}
+      setDestination={setDestination}
       successMessage={successMessage}
       submitting={submitting}
-      handleSubmit={createHotel}
+      handleSubmit={createDestination}
     />
   )
 }
 
-export default CreateHotel
+export default CreateDestination

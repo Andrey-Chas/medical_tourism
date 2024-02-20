@@ -23,11 +23,11 @@ const CreateClinic = () => {
       const response = await fetch('/api/clinic/new', {
         method: 'POST',
         body: JSON.stringify({
-          name: clinic.name,
-          specialisation: clinic.specialisation,
-          addressId: clinic.address,
-          url: clinic.url,
-          phone_number: clinic.phone_number
+          name: clinic.name.trim(),
+          specialisation: clinic.specialisation.trim(),
+          addressId: clinic.address.trim(),
+          url: clinic.url.trim(),
+          phone_number: clinic.phone_number.trim()
         })
       })
 

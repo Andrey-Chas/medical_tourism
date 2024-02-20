@@ -2,25 +2,32 @@
 
 import { useState, useEffect } from 'react';
 
-const Select = ({ data, setData }) => {
-    const [allAddresses, setAllAddresses] = useState([]);
+const Select = ({ type, addressValue, handleOnChangeAddress }) => {
+    const [allData, setAllData] = useState([]);
 
-    const fetchAddresses = async () => {
-        const response = await fetch('/api/address');
+    const fetchData = async () => {
+        const response = await fetch(`/api/${type}`);
         const data = await response.json();
-
-        setAllAddresses(data);
+        
+        const filteredData = type !== "address" && data.filter(valueData => 
+            valueData.address._id === addressValue);
+        
+        {type !== "address" ? (
+            setAllData(filteredData)
+        ) : (
+            setAllData(data)
+        )}
     };
 
     useEffect(() => {
-        fetchAddresses();
-    }, []);
+        fetchData();
+    }, [addressValue]);
 
     return (
-        <select className="select" required onChange={(e) => setData({ ...data,  address: e.target.value })}>
-            <option key="defaultValue" defaultValue="">Choose a country</option>
-            {allAddresses.map((address) => (
-                <option key={address._id} value={address._id}>{address.country}, {address.city}</option>
+        <select className="select" required onChange={handleOnChangeAddress}>
+            <option key="defaultValue" defaultValue="">Choose {type}</option>
+            {allData.map((valueData) => (
+                <option key={valueData._id} value={valueData._id}>{type !== "address" ? valueData.name : valueData.country + ", " + valueData.city}</option>
             ))}
         </select>
     )

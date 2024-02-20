@@ -4,7 +4,6 @@ const ClinicSchema = new Schema({
     name: { type: String, required: true },
     specialisation: { type: String, required: true },
     address: { type: Schema.Types.ObjectId, ref: "Address" },
-    hotel: { type: Schema.Types.ObjectId, ref: "Hotel" },
     url: { type: String, required: true },
     phone_number: { type: Number }
 })
