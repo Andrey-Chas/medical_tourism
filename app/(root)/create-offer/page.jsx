@@ -38,7 +38,7 @@ const CreateOffer = () => {
 
       if (response.ok) {
         console.log("Successfully added to the database");
-        setOffer({ ...offer, name: '' });
+        setOffer({ ...offer, name: '', description: '' });
         setSuccessMessage(true);
       }
     } catch (error) {

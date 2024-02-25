@@ -72,7 +72,7 @@ const FormClinic = ({ type, clinic, setClinic, successMessage, submitting, handl
                     {successMessage ? (
                         <span className="ml-10 text-green-500">
                             Created!
-                            <Link href="/" className="view_btn">
+                            <Link href="/display/clinic" className="view_btn">
                                 <Image
                                     src="/assets/icons/view.svg"
                                     alt="View Icon"

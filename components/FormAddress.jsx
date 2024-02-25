@@ -45,7 +45,7 @@ const FormAddress = ({ type, address, setAddress, successMessage, submitting, ha
                     {successMessage ? (
                         <span className="ml-10 text-green-500">
                             Created!
-                            <Link href="/" className="view_btn">
+                            <Link href="/display/address" className="view_btn">
                                 <Image
                                     src="/assets/icons/view.svg"
                                     alt="View Icon"

@@ -24,8 +24,8 @@ const FormHotel = ({ type, hotel, setHotel, successMessage, submitting, handleSu
                 <br />
                 <label className="forms_label">Address:</label>
                 <Select
-                    data={hotel}
-                    setData={setHotel}
+                    type='address'
+                    handleOnChangeAddress={(e) => setHotel({ ...hotel, address: e.target.value})}
                 />
                 <br />
                 <label className="forms_label">Url:</label>
@@ -63,7 +63,7 @@ const FormHotel = ({ type, hotel, setHotel, successMessage, submitting, handleSu
                     {successMessage ? (
                         <span className="ml-10 text-green-500">
                             Created!
-                            <Link href="/" className="view_btn">
+                            <Link href="/display/hotel" className="view_btn">
                                 <Image
                                     src="/assets/icons/view.svg"
                                     alt="View Icon"

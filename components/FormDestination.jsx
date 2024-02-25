@@ -24,8 +24,8 @@ const FormDestination = ({ type, destination, setDestination, successMessage, su
                 <br />
                 <label className="forms_label">Address:</label>
                 <Select
-                    data={destination}
-                    setData={setDestination}
+                    type='address'
+                    handleOnChangeAddress={(e) => setDestination({ ... destination, address: e.target.value })}
                 />
                 <br />
 
@@ -43,7 +43,7 @@ const FormDestination = ({ type, destination, setDestination, successMessage, su
                     {successMessage ? (
                         <span className="ml-10 text-green-500">
                             Created!
-                            <Link href="/" className="view_btn">
+                            <Link href="/display/destination" className="view_btn">
                                 <Image
                                     src="/assets/icons/view.svg"
                                     alt="View Icon"

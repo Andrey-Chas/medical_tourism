@@ -55,7 +55,7 @@ const FormOffer = ({ type, offer, setOffer, successMessage, submitting, handleSu
                     onChange={(e) => setOffer({ ...offer, description: e.target.value })}
                     placeholder="Write description here..."
                     required
-                    className="form_textarea"
+                    className="input_field"
                 />
                 <br />
 
@@ -73,7 +73,7 @@ const FormOffer = ({ type, offer, setOffer, successMessage, submitting, handleSu
                     {successMessage ? (
                         <span className="ml-10 text-green-500">
                             Created!
-                            <Link href="/" className="view_btn">
+                            <Link href="/display/offer" className="view_btn">
                                 <Image
                                     src="/assets/icons/view.svg"
                                     alt="View Icon"
