@@ -1,13 +1,15 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from "next/navigation";
 
 import DisplaySpecificData from "@/components/DisplaySpecificData";
 
 const ViewSpecificData = ({ params }) => {
     const [specificData, setSpecificData] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [isAddress, setIsAddress] = useState(false);
+    const router = useRouter();
     const searchParams = useSearchParams();
     const type = searchParams.get("type");
 
@@ -24,11 +26,23 @@ const ViewSpecificData = ({ params }) => {
         { params?.id && fetchSpecificData() };
     }, [params.id])
 
+    const handleEditClick = () => {
+        router.push(`/update-${type}/?id=${params?.id}`);
+    }
+
+    const handleDeleteClick = () => {
+        setIsModalOpen(true);
+    }
+
     return (
         <DisplaySpecificData
             type={type}
             data={specificData}
             isAddress={isAddress}
+            handleEditClick={handleEditClick}
+            handleDeleteClick={handleDeleteClick}
+            isModalOpen={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
         />
     )
 }

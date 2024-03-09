@@ -10,7 +10,7 @@ const Select = ({ type, addressValue, handleOnChangeAddress }) => {
         const data = await response.json();
         
         const filteredData = type !== "address" && data.filter(valueData => 
-            valueData.address._id === addressValue);
+            valueData.address && valueData.address._id === addressValue);
         
         {type !== "address" ? (
             setAllData(filteredData)

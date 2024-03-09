@@ -26,6 +26,7 @@ const ViewData = ({ params }) => {
             type={params.data}
             data={data}
             isAddress={isAddress}
+            setData={setData}
         />
     )
 }

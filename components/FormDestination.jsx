@@ -37,7 +37,7 @@ const FormDestination = ({ type, destination, setDestination, successMessage, su
                     >
                         {submitting ? "Working" : type}
                     </button>
-                    <Link href="/" className="cancel_btn ml-5">
+                    <Link href="/display/destination" className="cancel_btn ml-5">
                         Cancel
                     </Link>
                     {successMessage ? (

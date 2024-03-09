@@ -1,4 +1,9 @@
 import mongoose from 'mongoose';
+import Address from './models/address';
+import Clinic from './models/clinic';
+import Destination from './models/destination';
+import Hotel from './models/hotel';
+import Offer from './models/offer';
 
 // Connection to MongoDB
 

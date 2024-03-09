@@ -10,6 +10,14 @@
   @apply text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
 }
 
+.edit_btn {
+  @apply text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:ring-blue-800
+}
+
+.delete_btn {
+  @apply text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-500 font-medium rounded-lg text-sm sm:w-auto px-5 py-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:hover:ring-red-800
+}
+
 .cancel_btn {
   @apply text-white border border-gray-700 bg-gray-700 hover:bg-white hover:text-black focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-white dark:focus:ring-gray-800
 }
@@ -38,6 +46,10 @@
   @apply max-w-lg mx-auto my-20
 }
 
+.table_section_offer {
+  @apply max-w-xl mx-auto my-20
+}
+
 .forms_name {
   @apply text-center text-blue-700 font-bold text-2xl
 }
@@ -52,6 +64,14 @@
 
 .link_delete {
   @apply block py-2 px-4 text-sm text-red-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-red-700 dark:hover:text-white
+}
+
+.view_data {
+  @apply font-semibold text-gray-500
+}
+
+.offer_label {
+  @apply block mt-2 text-sm font-bold text-gray-900 dark:text-white
 }
 
 /* :root {

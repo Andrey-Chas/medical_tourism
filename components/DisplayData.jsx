@@ -1,6 +1,6 @@
 import DropdownTable from "./DropdownTable";
 
-const DisplayData = ({ type, data, isAddress }) => {
+const DisplayData = ({ type, data, isAddress, setData }) => {
     return (
         <section className="table_section overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -49,13 +49,15 @@ const DisplayData = ({ type, data, isAddress }) => {
                                             {dataValue.name}
                                         </th>
                                         <td className="px-6 py-4">
-                                            {dataValue.address.country}, {dataValue.address.city}
+                                            {dataValue.address ? dataValue.address.country + ", " + dataValue.address.city : "Not set"}
                                         </td>
                                     </>
                                 )}
                                 <DropdownTable
                                     type={type}
                                     dataValue={dataValue}
+                                    data={data}
+                                    setData={setData}
                                 />
                             </tr>
                         ))

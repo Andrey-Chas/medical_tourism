@@ -28,21 +28,21 @@ const FormOffer = ({ type, offer, setOffer, successMessage, submitting, handleSu
                     handleOnChangeAddress={handleOnChangeAddress}
                 />
                 <br />
-                <label className="forms_label">Clinic:</label>
+                <label className="forms_label">Clinic name:</label>
                 <Select
                     type='clinic'
                     addressValue={selectedAddress}
                     handleOnChangeAddress={(e) => setOffer({ ...offer, clinic: e.target.value })}
                 />
                 <br />
-                <label className="forms_label">Hotel:</label>
+                <label className="forms_label">Hotel name:</label>
                 <Select
                     type='hotel'
                     addressValue={selectedAddress}
                     handleOnChangeAddress={(e) => setOffer({ ...offer, hotel: e.target.value })}
                 />
                 <br />
-                <label className="forms_label">Destination:</label>
+                <label className="forms_label">Destination name:</label>
                 <Select
                     type='destination'
                     addressValue={selectedAddress}
@@ -67,7 +67,7 @@ const FormOffer = ({ type, offer, setOffer, successMessage, submitting, handleSu
                     >
                         {submitting ? "Working" : type}
                     </button>
-                    <Link href="/" className="cancel_btn ml-5">
+                    <Link href="/display/offer" className="cancel_btn ml-5">
                         Cancel
                     </Link>
                     {successMessage ? (

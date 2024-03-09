@@ -57,7 +57,7 @@ const FormHotel = ({ type, hotel, setHotel, successMessage, submitting, handleSu
                     >
                         {submitting ? "Working" : type}
                     </button>
-                    <Link href="/" className="cancel_btn ml-5">
+                    <Link href="/display/hotel" className="cancel_btn ml-5">
                         Cancel
                     </Link>
                     {successMessage ? (

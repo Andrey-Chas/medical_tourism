@@ -2,15 +2,26 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-const DropdownTable = ({ type, dataValue }) => {
+import DeleteConfirm from './DeleteConfirm';
+
+const DropdownTable = ({ type, dataValue, data, setData }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const router = useRouter();
 
     const handleShowClick = () => {
         router.push(`/display-specific/${dataValue._id}?type=${type}`);
+    }
+
+    const handleEditClick = () => {
+        router.push(`/update-${type}/?id=${dataValue._id}`);
+    }
+
+    const handleDeleteClick = () => {
+        setIsDropdownOpen(false);
+        setIsModalOpen(true);
     }
 
     return (
@@ -26,30 +37,27 @@ const DropdownTable = ({ type, dataValue }) => {
             {isDropdownOpen && (
                 <div className="z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                     <ul className="py-1 text-sm text-gray-700 dark:text-gray-200">
-                        <li className="link" onClick={handleShowClick}>
+                        <li className="link cursor-pointer" onClick={handleShowClick}>
                             Show
                         </li>
-                        <li>
-                            <Link
-                                href="/"
-                                className="link"
-                                onClick={() => setIsDropdownOpen(false)}
-                            >
-                                Edit
-                            </Link>
+                        <li className="link cursor-pointer" onClick={handleEditClick}>
+                            Edit
                         </li>
                     </ul>
-                    <div className="py-1">
-                        <Link
-                            href="/"
-                            className="link_delete"
-                            onClick={() => setIsDropdownOpen(false)}
-                        >
-                            Delete
-                        </Link>
+                    <div className="link_delete py-1 cursor-pointer" onClick={handleDeleteClick}>
+                        Delete
                     </div>
                 </div>
             )}
+            <DeleteConfirm
+                type={type}
+                isModalOpen={isModalOpen}
+                data={data}
+                setData={setData}
+                dataValue={dataValue}
+                setIsModalOpen={setIsModalOpen}
+                isRouter={false}
+            />
         </td>
     )
 }

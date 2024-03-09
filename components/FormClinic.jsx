@@ -66,7 +66,7 @@ const FormClinic = ({ type, clinic, setClinic, successMessage, submitting, handl
                     >
                         {submitting ? "Working" : type}
                     </button>
-                    <Link href="/" className="cancel_btn ml-5">
+                    <Link href="/display/clinic" className="cancel_btn ml-5">
                         Cancel
                     </Link>
                     {successMessage ? (

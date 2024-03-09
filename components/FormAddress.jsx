@@ -39,7 +39,7 @@ const FormAddress = ({ type, address, setAddress, successMessage, submitting, ha
                     >
                         {submitting ? "Working" : type}
                     </button>
-                    <Link href="/" className="cancel_btn ml-5">
+                    <Link href="/display/address" className="cancel_btn ml-5">
                         Cancel
                     </Link>
                     {successMessage ? (
