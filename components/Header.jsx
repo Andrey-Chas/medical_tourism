@@ -3,9 +3,13 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
+import { signOut } from "next-auth/react"
+import { useSession } from "next-auth/react"
 
 
 const Header = () => {
+    const { data: session } = useSession();
+
     const links = [
         { name: "Home", link: "/" },
         { name: "Offers", link: "/offer" },
@@ -22,11 +26,11 @@ const Header = () => {
     ];
 
     const linksView = [
-        { name: "View address", link: "/display/address"},
-        { name: "View clinic", link: "/display/clinic"},
-        { name: "View destination", link: "/display/destination"},
-        { name: "View hotel", link: "/display/hotel"},
-        { name: "View offer", link: "/display/offer"},
+        { name: "View address", link: "/display/address" },
+        { name: "View clinic", link: "/display/clinic" },
+        { name: "View destination", link: "/display/destination" },
+        { name: "View hotel", link: "/display/hotel" },
+        { name: "View offer", link: "/display/offer" },
     ]
 
     const [isOpen, setIsOpen] = useState(false);
@@ -83,71 +87,88 @@ const Header = () => {
                             </li>
                         ))
                     }
-                    <div className="relative font-semibold my-7 md:my-0 md:ml-8">
-                        <div className="flex text-black hover:text-gray-500 duration-500 cursor-pointer" onClick={() => setDropdownOpen((prev) => !prev)}>
-                            Create
-                            <Image
-                                src="/assets/icons/arrow-dropdown.svg"
-                                alt="Dropdown arrow icon"
-                                width={15}
-                                height={15}
-                            />
-                        </div>
 
-                        {dropdownOpen && (
-                            <div className="absolute mt-7 p-3 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                                <ul>
-                                    {
-                                        linksCreate.map(linkCreate => (
-                                            <li key={linkCreate.name} className="py-2">
-                                                <Link
-                                                    href={linkCreate.link}
-                                                    className="text-black hover:text-gray-500 duration-500 cursor-pointer"
-                                                    onClick={() => setDropdownOpen(false)}
-                                                >
-                                                    {linkCreate.name}
-                                                </Link>
-                                            </li>
-                                        ))
-                                    }
-                                </ul>
-                            </div>
-                        )}
-                    </div>
-                    <div className="relative font-semibold my-7 md:my-0 md:ml-8">
-                        <div className="flex text-black hover:text-gray-500 duration-500 cursor-pointer" onClick={() => setDropdownOpenView((prev) => !prev)}>
-                            View
-                            <Image
-                                src="/assets/icons/arrow-dropdown.svg"
-                                alt="Dropdown arrow icon"
-                                width={15}
-                                height={15}
-                            />
-                        </div>
+                    {session?.user?.role === "admin" && (
+                        <>
+                            <div className="relative font-semibold my-7 md:my-0 md:ml-8">
+                                <div className="flex text-black hover:text-gray-500 duration-500 cursor-pointer" onClick={() => setDropdownOpen((prev) => !prev)}>
+                                    Create
+                                    <Image
+                                        src="/assets/icons/arrow-dropdown.svg"
+                                        alt="Dropdown arrow icon"
+                                        width={15}
+                                        height={15}
+                                    />
+                                </div>
 
-                        {dropdownOpenView && (
-                            <div className="absolute mt-7 p-3 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                                <ul>
-                                    {
-                                        linksView.map(linkView => (
-                                            <li key={linkView.name} className="py-2">
-                                                <Link
-                                                    href={linkView.link}
-                                                    className="text-black hover:text-gray-500 duration-500 cursor-pointer"
-                                                    onClick={() => setDropdownOpenView(false)}
-                                                >
-                                                    {linkView.name}
-                                                </Link>
-                                            </li>
-                                        ))
-                                    }
-                                </ul>
+                                {dropdownOpen && (
+                                    <div className="absolute mt-7 p-3 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                                        <ul>
+                                            {
+                                                linksCreate.map(linkCreate => (
+                                                    <li key={linkCreate.name} className="py-2">
+                                                        <Link
+                                                            href={linkCreate.link}
+                                                            className="text-black hover:text-gray-500 duration-500 cursor-pointer"
+                                                            onClick={() => setDropdownOpen(false)}
+                                                        >
+                                                            {linkCreate.name}
+                                                        </Link>
+                                                    </li>
+                                                ))
+                                            }
+                                        </ul>
+                                    </div>
+                                )}
                             </div>
-                        )}
-                    </div>
-                    <button className="sign_up_btn">
-                        Sign Up
-                    </button>
+                            <div className="relative font-semibold my-7 md:my-0 md:ml-8">
+                                <div className="flex text-black hover:text-gray-500 duration-500 cursor-pointer" onClick={() => setDropdownOpenView((prev) => !prev)}>
+                                    View
+                                    <Image
+                                        src="/assets/icons/arrow-dropdown.svg"
+                                        alt="Dropdown arrow icon"
+                                        width={15}
+                                        height={15}
+                                    />
+                                </div>
+
+                                {dropdownOpenView && (
+                                    <div className="absolute mt-7 p-3 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                                        <ul>
+                                            {
+                                                linksView.map(linkView => (
+                                                    <li key={linkView.name} className="py-2">
+                                                        <Link
+                                                            href={linkView.link}
+                                                            className="text-black hover:text-gray-500 duration-500 cursor-pointer"
+                                                            onClick={() => setDropdownOpenView(false)}
+                                                        >
+                                                            {linkView.name}
+                                                        </Link>
+                                                    </li>
+                                                ))
+                                            }
+                                        </ul>
+                                    </div>
+                                )}
+                            </div>
+                        </>
+                    )}
+
+                    {session?.user ? (
+                        <>
+                            <div className="font-semibold my-7 md:my-0 md:ml-8">
+                                Hello, {session?.user?.firstName}
+                            </div>
+                            <button onClick={() => signOut()} className="sign_out_btn">
+                                Sign Out
+                            </button>
+                        </>
+                    ) : (
+                        <Link href="/register" className="sign_up_btn">
+                            Sign Up
+                        </Link>
+                    )}
                 </ul>
             </div>
         </header>
