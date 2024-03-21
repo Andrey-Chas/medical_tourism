@@ -1,10 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 
 import DisplayData from "@/components/DisplayData";
 
 const ViewData = ({ params }) => {
+    const { data: session } = useSession();
     const [data, setData] = useState([]);
     const [isAddress, setIsAddress] = useState(false);
 
@@ -22,12 +24,19 @@ const ViewData = ({ params }) => {
     }, [params.data])
 
     return (
-        <DisplayData
-            type={params.data}
-            data={data}
-            isAddress={isAddress}
-            setData={setData}
-        />
+        session?.user?.role === "admin" ? (
+            <DisplayData
+                type={params.data}
+                data={data}
+                isAddress={isAddress}
+                setData={setData}
+            />
+        ) : (
+            <div className="forms_section">
+                <h1 className="access">Access Denied</h1>
+                <div className='permissions'>You don't have the permissions</div>
+            </div>
+        )
     )
 }
 

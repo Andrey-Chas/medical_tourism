@@ -1,10 +1,12 @@
 'use client';
 
 import { useState } from 'react';
+import { useSession } from 'next-auth/react';
 
 import FormClinic from '@/components/FormClinic';
 
 const CreateClinic = () => {
+  const { data: session } = useSession();
   const [submitting, setSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState(false);
   const [clinic, setClinic] = useState({
@@ -45,14 +47,21 @@ const CreateClinic = () => {
   }
 
   return (
-    <FormClinic
-      type="Create"
-      clinic={clinic}
-      setClinic={setClinic}
-      successMessage={successMessage}
-      submitting={submitting}
-      handleSubmit={createClinic}
-    />
+    session?.user?.role === "admin" ? (
+      <FormClinic
+        type="Create"
+        clinic={clinic}
+        setClinic={setClinic}
+        successMessage={successMessage}
+        submitting={submitting}
+        handleSubmit={createClinic}
+      />
+    ) : (
+      <div className="forms_section">
+        <h1 className="access">Access Denied</h1>
+        <div className="permissions">You don't have the permissions</div>
+      </div>
+    )
   )
 }
 

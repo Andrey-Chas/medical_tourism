@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 import FormOffer from '@/components/FormOffer';
 
 const UpdateOffer = () => {
+  const { data: session } = useSession();
   const [submitting, setSubmitting] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState("");
   const router = useRouter();
@@ -23,28 +25,28 @@ const UpdateOffer = () => {
 
   useEffect(() => {
     const getOffer = async () => {
-        const response = await fetch(`/api/offer/${offerId}`);
-        const data = await response.json();
+      const response = await fetch(`/api/offer/${offerId}`);
+      const data = await response.json();
 
-        setOffer({
-            name: data.name,
-            clinic: data.clinic,
-            hotel: data.hotel,
-            address: data.address,
-            destination: data.destination,
-            description: data.description,
-            rating: data.rating,
-        })
+      setOffer({
+        name: data.name,
+        clinic: data.clinic,
+        hotel: data.hotel,
+        address: data.address,
+        destination: data.destination,
+        description: data.description,
+        rating: data.rating,
+      })
     }
 
-    {offerId && getOffer()}
+    { offerId && getOffer() }
   }, [offerId])
 
   const updateOffer = async (e) => {
     e.preventDefault();
     setSubmitting(true);
 
-    if(!offerId) return console.log("Offer not found");
+    if (!offerId) return console.log("Offer not found");
 
     try {
       const response = await fetch(`/api/offer/${offerId}`, {
@@ -76,15 +78,22 @@ const UpdateOffer = () => {
   }
 
   return (
-    <FormOffer
-      type="Edit"
-      offer={offer}
-      setOffer={setOffer}
-      submitting={submitting}
-      handleSubmit={updateOffer}
-      selectedAddress={selectedAddress}
-      handleOnChangeAddress={onChangeAddressHandler}
-    />
+    session?.user?.role === "admin" ? (
+      <FormOffer
+        type="Edit"
+        offer={offer}
+        setOffer={setOffer}
+        submitting={submitting}
+        handleSubmit={updateOffer}
+        selectedAddress={selectedAddress}
+        handleOnChangeAddress={onChangeAddressHandler}
+      />
+    ) : (
+      <div className="forms_section">
+        <h1 className="access">Access Denied</h1>
+        <div className="permissions">You don't have the permissions</div>
+      </div>
+    )
   )
 }
 

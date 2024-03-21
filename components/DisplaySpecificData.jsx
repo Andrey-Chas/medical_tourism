@@ -14,7 +14,7 @@ const DisplaySpecificData = ({ type, data, isAddress, handleEditClick, handleDel
                             <div>
                                 <label className="forms_label">{key !== "phone_number" ? key[0].toUpperCase() + key.slice(1) : "Phone number"}{isAddress || key === "clinic" || key === "hotel" || key === "destination" ? " name:" : ":"}</label>
                                 <div className="view_data">
-                                    {!value ? "Not set" : key === "clinic" || key === "hotel" || key === "address" || key === "destination" ? value.name || value.country + ", " + value.city : value}
+                                    {!value ? "Not set" : key === "clinic" || key === "hotel" || key === "address" || key === "destination" ? value.name || value.country + ", " + value.city : key === "comment" ? "Number of comments: " + value.length : value}
                                 </div>
                                 <br />
                             </div>

@@ -82,6 +82,14 @@
   @apply w-[400px] border border-gray-200 py-2 px-6 bg-zinc-100/40;
 }
 
+.access {
+  @apply text-red-500 text-center text-2xl font-bold;
+}
+
+.permissions {
+  @apply text-black text-center font-semibold;
+}
+
 /* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;

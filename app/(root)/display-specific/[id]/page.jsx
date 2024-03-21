@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from "next/navigation";
+import { useSession } from 'next-auth/react';
 
 import DisplaySpecificData from "@/components/DisplaySpecificData";
 
 const ViewSpecificData = ({ params }) => {
+    const { data: session } = useSession();
     const [specificData, setSpecificData] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isAddress, setIsAddress] = useState(false);
@@ -35,15 +37,22 @@ const ViewSpecificData = ({ params }) => {
     }
 
     return (
-        <DisplaySpecificData
-            type={type}
-            data={specificData}
-            isAddress={isAddress}
-            handleEditClick={handleEditClick}
-            handleDeleteClick={handleDeleteClick}
-            isModalOpen={isModalOpen}
-            setIsModalOpen={setIsModalOpen}
-        />
+        session?.user?.role === "admin" ? (
+            <DisplaySpecificData
+                type={type}
+                data={specificData}
+                isAddress={isAddress}
+                handleEditClick={handleEditClick}
+                handleDeleteClick={handleDeleteClick}
+                isModalOpen={isModalOpen}
+                setIsModalOpen={setIsModalOpen}
+            />
+        ) : (
+            <div className="forms_section">
+                <h1 className="access">Access Denied</h1>
+                <div className="permissions">You don't have the permissions</div>
+            </div>
+        )
     )
 }
 

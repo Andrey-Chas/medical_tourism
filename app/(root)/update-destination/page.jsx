@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 import FormDestination from '@/components/FormDestination';
 
 const UpdateDestination = () => {
+  const { data: session } = useSession();
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -17,23 +19,23 @@ const UpdateDestination = () => {
 
   useEffect(() => {
     const getDestination = async () => {
-        const response = await fetch(`/api/destination/${destinationId}`);
-        const data = await response.json();
+      const response = await fetch(`/api/destination/${destinationId}`);
+      const data = await response.json();
 
-        setDestination({
-            name: data.name,
-            address: data.address,
-        })
+      setDestination({
+        name: data.name,
+        address: data.address,
+      })
     }
 
-    {destinationId && getDestination()}
+    { destinationId && getDestination() }
   }, [destinationId])
 
   const updateDestination = async (e) => {
     e.preventDefault();
     setSubmitting(true);
 
-    if(!destinationId) return console.log("Destination not found");
+    if (!destinationId) return console.log("Destination not found");
 
     try {
       const response = await fetch(`/api/destination/${destinationId}`, {
@@ -56,13 +58,20 @@ const UpdateDestination = () => {
   }
 
   return (
-    <FormDestination
-      type="Edit"
-      destination={destination}
-      setDestination={setDestination}
-      submitting={submitting}
-      handleSubmit={updateDestination}
-    />
+    session?.user?.role === "admin" ? (
+      <FormDestination
+        type="Edit"
+        destination={destination}
+        setDestination={setDestination}
+        submitting={submitting}
+        handleSubmit={updateDestination}
+      />
+    ) : (
+      <div className="forms_section">
+        <h1 className="access">Access Denied</h1>
+        <div className="permissions">You don't have the permissions</div>
+      </div>
+    )
   )
 }
 

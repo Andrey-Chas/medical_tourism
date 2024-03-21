@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 import FormClinic from '@/components/FormClinic';
 
 const UpdateClinic = () => {
+  const { data: session } = useSession();
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -20,26 +22,26 @@ const UpdateClinic = () => {
 
   useEffect(() => {
     const getClinic = async () => {
-        const response = await fetch(`/api/clinic/${clinicId}`);
-        const data = await response.json();
+      const response = await fetch(`/api/clinic/${clinicId}`);
+      const data = await response.json();
 
-        setClinic({
-            name: data.name,
-            specialisation: data.specialisation,
-            address: data.address,
-            url: data.url,
-            phone_number: data.phone_number
-        })
+      setClinic({
+        name: data.name,
+        specialisation: data.specialisation,
+        address: data.address,
+        url: data.url,
+        phone_number: data.phone_number
+      })
     }
 
-    {clinicId && getClinic()}
+    { clinicId && getClinic() }
   }, [clinicId])
 
   const updateClinic = async (e) => {
     e.preventDefault();
     setSubmitting(true);
 
-    if(!clinicId) return console.log("Clinic not found");
+    if (!clinicId) return console.log("Clinic not found");
 
     try {
       const response = await fetch(`/api/clinic/${clinicId}`, {
@@ -65,13 +67,20 @@ const UpdateClinic = () => {
   }
 
   return (
-    <FormClinic
-      type="Edit"
-      clinic={clinic}
-      setClinic={setClinic}
-      submitting={submitting}
-      handleSubmit={updateClinic}
-    />
+    session?.user?.role === "admin" ? (
+      <FormClinic
+        type="Edit"
+        clinic={clinic}
+        setClinic={setClinic}
+        submitting={submitting}
+        handleSubmit={updateClinic}
+      />
+    ) : (
+      <div className="forms_section">
+        <h1 className="access">Access Denied</h1>
+        <div className="permissions">You don't have the permissions</div>
+      </div>
+    )
   )
 }
 

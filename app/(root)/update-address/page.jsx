@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 import FormAddress from '@/components/FormAddress';
 
 const UpdateAddress = () => {
+  const { data: session } = useSession();
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -17,23 +19,23 @@ const UpdateAddress = () => {
 
   useEffect(() => {
     const getAddress = async () => {
-        const response = await fetch(`/api/address/${addressId}`);
-        const data = await response.json();
+      const response = await fetch(`/api/address/${addressId}`);
+      const data = await response.json();
 
-        setAddress({
-            city: data.city,
-            country: data.country,
-        })
+      setAddress({
+        city: data.city,
+        country: data.country,
+      })
     }
 
-    {addressId && getAddress()}
+    { addressId && getAddress() }
   }, [addressId])
 
   const updateAddress = async (e) => {
     e.preventDefault();
     setSubmitting(true);
 
-    if(!addressId) return console.log("Address not found");
+    if (!addressId) return console.log("Address not found");
 
     try {
       const response = await fetch(`/api/address/${addressId}`, {
@@ -56,13 +58,20 @@ const UpdateAddress = () => {
   }
 
   return (
-    <FormAddress
-      type="Edit"
-      address={address}
-      setAddress={setAddress}
-      submitting={submitting}
-      handleSubmit={updateAddress}
-    />
+    session?.user?.role === "admin" ? (
+      <FormAddress
+        type="Edit"
+        address={address}
+        setAddress={setAddress}
+        submitting={submitting}
+        handleSubmit={updateAddress}
+      />
+    ) : (
+      <div className="forms_section">
+        <h1 className="access">Access Denied</h1>
+        <div className="permissions">You don't have the permissions</div>
+      </div>
+    )
   )
 }
 

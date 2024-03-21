@@ -46,6 +46,7 @@ export const authOptions = {
             if (user) {
                 token.role = user.role;
                 token.firstName = user.firstName;
+                token.lastName = user.lastName;
             }
             return token;
         },
@@ -53,6 +54,7 @@ export const authOptions = {
             if (session?.user) {
                 session.user.role = token.role;
                 session.user.firstName = token.firstName;
+                session.user.lastName = token.lastName;
             }
             return session;
         },

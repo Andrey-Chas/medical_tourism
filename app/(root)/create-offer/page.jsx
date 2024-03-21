@@ -1,10 +1,12 @@
 'use client';
 
 import { useState } from 'react';
+import { useSession } from 'next-auth/react';
 
 import FormOffer from '@/components/FormOffer';
 
 const CreateOffer = () => {
+  const { data: session } = useSession();
   const [submitting, setSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState("");
@@ -54,16 +56,23 @@ const CreateOffer = () => {
   }
 
   return (
-    <FormOffer
-      type="Create"
-      offer={offer}
-      setOffer={setOffer}
-      successMessage={successMessage}
-      submitting={submitting}
-      handleSubmit={createOffer}
-      selectedAddress={selectedAddress}
-      handleOnChangeAddress={onChangeAddressHandler}
-    />
+    session?.user?.role === "admin" ? (
+      <FormOffer
+        type="Create"
+        offer={offer}
+        setOffer={setOffer}
+        successMessage={successMessage}
+        submitting={submitting}
+        handleSubmit={createOffer}
+        selectedAddress={selectedAddress}
+        handleOnChangeAddress={onChangeAddressHandler}
+      />
+    ) : (
+      <div className="forms_section">
+        <h1 className="access">Access Denied</h1>
+        <div className="permissions">You don't have the permissions</div>
+      </div>
+    )
   )
 }
 

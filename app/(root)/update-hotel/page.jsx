@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 import FormHotel from '@/components/FormHotel';
 
 const UpdateHotel = () => {
+  const { data: session } = useSession();
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -19,25 +21,25 @@ const UpdateHotel = () => {
 
   useEffect(() => {
     const getHotel = async () => {
-        const response = await fetch(`/api/hotel/${hotelId}`);
-        const data = await response.json();
+      const response = await fetch(`/api/hotel/${hotelId}`);
+      const data = await response.json();
 
-        setHotel({
-            name: data.name,
-            address: data.address,
-            url: data.url,
-            phone_number: data.phone_number,
-        })
+      setHotel({
+        name: data.name,
+        address: data.address,
+        url: data.url,
+        phone_number: data.phone_number,
+      })
     }
 
-    {hotelId && getHotel()}
+    { hotelId && getHotel() }
   }, [hotelId])
 
   const updateHotel = async (e) => {
     e.preventDefault();
     setSubmitting(true);
 
-    if(!hotelId) return console.log("Hotel not found");
+    if (!hotelId) return console.log("Hotel not found");
 
     try {
       const response = await fetch(`/api/hotel/${hotelId}`, {
@@ -62,13 +64,20 @@ const UpdateHotel = () => {
   }
 
   return (
-    <FormHotel
-      type="Edit"
-      hotel={hotel}
-      setHotel={setHotel}
-      submitting={submitting}
-      handleSubmit={updateHotel}
-    />
+    session?.user?.role === "admin" ? (
+      <FormHotel
+        type="Edit"
+        hotel={hotel}
+        setHotel={setHotel}
+        submitting={submitting}
+        handleSubmit={updateHotel}
+      />
+    ) : (
+      <div className="forms_section">
+        <h1 className="access">Access Denied</h1>
+        <div className="permissions">You don't have the permissions</div>
+      </div>
+    )
   )
 }
 

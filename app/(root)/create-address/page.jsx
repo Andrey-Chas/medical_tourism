@@ -1,10 +1,12 @@
 'use client';
 
 import { useState } from 'react';
+import { useSession } from 'next-auth/react';
 
 import FormAddress from '@/components/FormAddress';
 
 const CreateAddress = () => {
+  const { data: session } = useSession();
   const [submitting, setSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState(false);
   const [address, setAddress] = useState({
@@ -39,14 +41,21 @@ const CreateAddress = () => {
   }
 
   return (
-    <FormAddress
-      type="Create"
-      address={address}
-      setAddress={setAddress}
-      successMessage={successMessage}
-      submitting={submitting}
-      handleSubmit={createAddress}
-    />
+    session?.user?.role === "admin" ? (
+      <FormAddress
+        type="Create"
+        address={address}
+        setAddress={setAddress}
+        successMessage={successMessage}
+        submitting={submitting}
+        handleSubmit={createAddress}
+      />
+    ) : (
+      <div className="forms_section">
+        <h1 className="access">Access Denied</h1>
+        <div className="permissions">You don't have the permissions</div>
+      </div>
+    )
   )
 }
 

@@ -1,10 +1,12 @@
 'use client';
 
 import { useState } from 'react';
+import { useSession } from 'next-auth/react';
 
 import FormHotel from '@/components/FormHotel';
 
-const CreateHotel= () => {
+const CreateHotel = () => {
+  const { data: session } = useSession();
   const [submitting, setSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState(false);
   const [hotel, setHotel] = useState({
@@ -43,14 +45,21 @@ const CreateHotel= () => {
   }
 
   return (
-    <FormHotel
-      type="Create"
-      hotel={hotel}
-      setHotel={setHotel}
-      successMessage={successMessage}
-      submitting={submitting}
-      handleSubmit={createHotel}
-    />
+    session?.user?.role === "admin" ? (
+      <FormHotel
+        type="Create"
+        hotel={hotel}
+        setHotel={setHotel}
+        successMessage={successMessage}
+        submitting={submitting}
+        handleSubmit={createHotel}
+      />
+    ) : (
+      <div className="forms_section">
+        <h1 className="access">Access Denied</h1>
+        <div className="permissions">You don't have the permissions</div>
+      </div>
+    )
   )
 }
 
