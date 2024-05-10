@@ -54,6 +54,13 @@ const DisplayOffer = ({ data, session, comments, setComment, handlePostCommentCl
                                 <div className="mt-3 font-normal text-gray-700 dark:text-white">{data.description}</div>
                             </td>
                         </tr>
+                        <tr>
+                            <td>
+                                <button className="book_now_btn m-5 whitespace-nowrap">
+                                    Book now
+                                </button>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </section>
