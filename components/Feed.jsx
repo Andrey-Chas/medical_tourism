@@ -67,6 +67,12 @@ const Feed = () => {
                 </div>
             </form>
 
+            {searchText.toLowerCase() === "bulgaria" && (
+                <div className="text-justify text-wrap max-w-md mx-auto">
+                    Bulgaria has the potential to become a popular destination for health tourism because of the combination of excellent geographical, climatic and environmental conditions, unique combination of seaside, mountains and mineral water, long-standing tradition in balneology and spa and relatively low cost of medical service of low prices of medical services.
+                </div>
+            )}
+
             {searchText ? (
                 <OfferCardDisplay
                     data={searchedResults}
