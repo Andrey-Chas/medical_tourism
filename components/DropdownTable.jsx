@@ -35,7 +35,7 @@ const DropdownTable = ({ type, dataValue, data, setData }) => {
                 />
             </div>
             {isDropdownOpen && (
-                <div className="z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                <div className="absolute m-5 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                     <ul className="py-1 text-sm text-gray-700 dark:text-gray-200">
                         <li className="link cursor-pointer" onClick={handleShowClick}>
                             Show
